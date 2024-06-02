@@ -67,7 +67,10 @@ class RectangleStyledJSONNode(StyledJSONNode):
             result += "│ "
         # straight lines
         if node.get_level() > 2:
-            result += ' │ ' * (node.get_level() - 2)
+            if self.fl_detector.is_last(node):
+                result += '─┴─' * (node.get_level() - 2)
+            else:
+                result += ' │ ' * (node.get_level() - 2)
         # header
         if self.fl_detector.is_last(node):
             result += '─┴─'
