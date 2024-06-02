@@ -17,8 +17,9 @@ def main():
         builder = StyledJSONBuilder()
         if args.config is not None:
             builder.load_icon_family(args.config)
-        print(f'available icon families: {builder.get_available_icon_families()}')
-        print(f'available styles: {builder.get_available_styles()}')
+        if args.verbose:
+            print(f'available icon families: {builder.get_available_icon_families()}')
+            print(f'available styles: {builder.get_available_styles()}')
         builder.create_styled_json(args.file, args.icon_family, args.style).render()
     except FJEException as e:
         print(f'Error: {e}')
