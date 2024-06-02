@@ -21,16 +21,51 @@ pip uninstall fje
 在使用 pip 安装 fje 后，你可以直接在命令行中使用 `fje` 命令打开 Funny JSON Explorer：
 
 ```shell
-fje path/to/your/json/file
+fje -f <json_file_path>
+```
+
+完整的命令说明如下：
+
+```
+usage: fje [-h] -f FILE [-s STYLE] [-i ICON_FAMILY] [-c CONFIG] [-v]
+
+Funny JSON Explorer
+
+options:
+  -h, --help            show this help message and exit
+  -f FILE, --file FILE  JSON file path
+  -s STYLE, --style STYLE
+                        style
+  -i ICON_FAMILY, --icon-family ICON_FAMILY
+                        icon family
+  -c CONFIG, --config CONFIG
+                        icon family file
+  -v, --verbose         print availavle icon families and styles
+```
+
+自定义的 icon family 文件为 JSON 格式，示例如下；
+
+```json
+{
+    "marker": {
+        "composite": "+",
+        "leaf": "*"
+    },
+    "emoji": {
+        "composite": "📦",
+        "leaf": "🧸"
+    }
+}
 ```
 
 ## 开发
 
+项目通过 setuptools 进行打包，源码位于 fje 目录下。
+
+如果需要添加样式，只需实现 `style.Style` 的抽象产品类和 `style.StyleFactory` 的抽象工厂类即可，然后在 `style.__init__.py` 中注册即可。
+
+详细请参考 docs 目录的设计文档。
+
 ## 测试
 
-测试文件组织在 test 目录下，使用 unittest 进行测试：
-
-```shell
-# 在项目根目录下运行测试
-python -m unittest test
-```
+时间有限没有做单元测试，不过 test 目录提供了集成测试，可以在安装后自己看一下效果。
