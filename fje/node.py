@@ -111,8 +111,8 @@ class JSONNodeFactory:
 
     def _create_composite_from_list(self, name: str, level: int, obj) -> JSONComposite:
         composite = JSONComposite(name, level)
-        for item in obj:
-            child = self._create('', level + 1, item)
+        for idx, item in enumerate(obj):
+            child = self._create(f'Array[{idx}]', level + 1, item)
             composite.add_child(child)
         return composite
 
