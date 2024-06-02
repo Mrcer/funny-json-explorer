@@ -7,6 +7,7 @@ from ..exception import FJEException
 from ..icon import IconFamily
 from ..node import JSONNodeFactory
 from .tree_style import TreeStyledJSONNodeFactory
+from .rectangle_style import RectangleStyledJSONNodeFactory
 import os
 import json
 from ..node import JSONNodeFactory
@@ -19,7 +20,8 @@ class StyledJSONBuilder:
             'poker-face-icon-family': IconFamily('\u2666', '\u2660')
         }
         self._styles_factory = {
-            'tree': TreeStyledJSONNodeFactory()
+            'tree': TreeStyledJSONNodeFactory(),
+            'rect': RectangleStyledJSONNodeFactory()
         }
 
     def create_styled_json(self, filepath: str, icon_family: str, style: str):

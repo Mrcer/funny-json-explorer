@@ -14,11 +14,16 @@ import json
 import os
 from .exception import FJEException
 
+id = 0
+
 class JSONNode(ABC):
 
     def __init__(self, name: str, level: int):
+        global id 
         self._name = name
         self._level = level
+        self._id = id
+        id += 1
 
     @abstractmethod
     def is_leaf(self) -> bool:
@@ -35,6 +40,9 @@ class JSONNode(ABC):
 
     def get_name(self) -> str:
         return self._name
+    
+    def get_id(self) -> int:
+        return self._id
     
     def get_level(self) -> int:
         return self._level
