@@ -10,7 +10,6 @@ sample output:
 设计模式：
 1. 工厂模式：StyledJSONNodeFactory
 """
-from typing import Any
 from .style import StyledJSONNode, StyledJSONNodeFactory
 from ..node import *
 from ..icon import IconFamily
