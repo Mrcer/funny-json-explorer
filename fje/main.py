@@ -4,7 +4,7 @@ from .exception import FJEException
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Funny JSON Explorer')
-    parser.add_argument('-f', '--file', type=str, help='JSON file path', required=True)
+    parser.add_argument('-f', '--file', type=str, help='JSON file path')
     parser.add_argument('-s', '--style', type=str, help='style', default='tree')
     parser.add_argument('-i', '--icon-family', type=str, help='icon family', default='default')
     parser.add_argument('-c', '--config', type=str, help='icon family file')
@@ -20,7 +20,10 @@ def main():
         if args.verbose:
             print(f'available icon families: {builder.get_available_icon_families()}')
             print(f'available styles: {builder.get_available_styles()}')
-        builder.create_styled_json(args.file, args.icon_family, args.style).render()
+        else:
+            if args.file is None:
+                raise FJEException('请输入JSON文件路径')
+            builder.create_styled_json(args.file, args.icon_family, args.style).render()
     except FJEException as e:
         print(f'Error: {e}')
     
