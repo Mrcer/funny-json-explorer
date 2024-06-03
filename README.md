@@ -62,10 +62,14 @@ options:
 
 项目通过 setuptools 进行打包，源码位于 fje 目录下。
 
-如果需要添加样式，只需实现 `style.Style` 的抽象产品类和 `style.StyleFactory` 的抽象工厂类即可，然后在 `style.__init__.py` 中注册即可。
+如果需要添加样式，只需实现 `style.style` 的抽象产品类和的抽象工厂类，然后在 `style.__init__.py` 中注册即可。
 
 详细请参考 docs 目录的设计文档。
 
 ## 测试
 
-时间有限没有做单元测试，不过 test 目录提供了集成测试，可以在安装后自己看一下效果。
+时间有限没有做单元测试，不过 test 目录提供了集成测试，可以在安装后自己看一下效果：
+
+```shell
+test> fje -f test.json -c config.json -s rect -i marker
+```
