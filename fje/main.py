@@ -1,5 +1,6 @@
 import argparse
-from .style import StyledJSONBuilder
+from .style import JSONNodeDrawer
+from .node import JSONNodeFactory
 from .exception import FJEException
 
 def parse_args():
@@ -14,16 +15,19 @@ def parse_args():
 def main():
     try:
         args = parse_args()
-        builder = StyledJSONBuilder()
+        drawer = JSONNodeDrawer()
         if args.config is not None:
-            builder.load_icon_family(args.config)
+            drawer.load_icon_family(args.config)
         if args.verbose:
-            print(f'available icon families: {builder.get_available_icon_families()}')
-            print(f'available styles: {builder.get_available_styles()}')
+            print(f'available icon families: {drawer.get_available_icon_families()}')
+            print(f'available styles: {drawer.get_available_styles()}')
         else:
             if args.file is None:
                 raise FJEException('请输入JSON文件路径')
-            builder.create_styled_json(args.file, args.icon_family, args.style).render()
+            root = JSONNodeFactory(args.file).create()
+            drawer.set_icon_family(args.icon_family)
+            drawer.set_style(args.style)
+            drawer.draw(root)
     except FJEException as e:
         print(f'Error: {e}')
     

@@ -8,19 +8,17 @@ sample output:
 └─*name5
 
 设计模式：
-1. 工厂模式：StyledJSONNodeFactory
+1. 策略模式：DisplayTreeStyle 继承自 DisplayStrategy，是策略模式的具体实现。
 """
-from .style import StyledJSONNode, StyledJSONNodeFactory
+from .display import DisplayStrategy
 from ..node import *
 from ..icon import IconFamily
 
-class TreeStyledJSONNode(StyledJSONNode):
+class DisplayTreeStyle(DisplayStrategy):
 
-    def __init__(self, root: JSONNode, icon_family: IconFamily):
-        super().__init__(root, icon_family)
-
-    def render(self) -> None:
-        self._render_branch('', '', self._root)
+    def display(self, root: JSONNode, icon_family: IconFamily) -> None:
+        self._icon_family = icon_family
+        self._render('', '', root)
 
     def _render(self, prefix_first: str, prefix_follow: str, node: JSONNode) -> None:
         if node.is_leaf():
@@ -44,8 +42,3 @@ class TreeStyledJSONNode(StyledJSONNode):
         for child in children[:-1]:
             self._render(f'{prefix_follow}├─', f'{prefix_follow}│  ',child)
         self._render(f'{prefix_follow}└─', f'{prefix_follow}   ', children[-1])
-
-class TreeStyledJSONNodeFactory(StyledJSONNodeFactory):
-
-    def create(self, root: JSONNode, icon_family: IconFamily) -> StyledJSONNode:
-        return TreeStyledJSONNode(root, icon_family)
