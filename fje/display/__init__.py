@@ -19,12 +19,12 @@ class JSONNodeDrawer:
             'default': IconFamily(' ', ' '),
             'poker-face-icon-family': IconFamily('\u2666', '\u2660')
         }
-        self._display_strategy: Dict[str, DisplayStrategy] = {
+        self._display_strategies: Dict[str, DisplayStrategy] = {
             'tree': DisplayTreeStyle(),
             'rect': DisplayRectangleStyle()
         }
         self._selected_icon_family = self._icon_families['default']
-        self._selected_style = self._display_strategy['tree']
+        self._selected_style = self._display_strategies['tree']
 
     def draw(self, root: JSONNode) -> None:
         self._selected_style.display(root, self._selected_icon_family)
@@ -37,7 +37,7 @@ class JSONNodeDrawer:
     
     def set_style(self, style: str) -> None:
         try:
-            self._selected_style = self._display_strategy[style]
+            self._selected_style = self._display_strategies[style]
         except KeyError:
             raise FJEException(f'找不到样式：{style}')
     
@@ -53,7 +53,7 @@ class JSONNodeDrawer:
             raise FJEException(f'图标集文件格式错误：{filepath}')
 
     def get_available_styles(self):
-        return list(self._display_strategy.keys())
+        return list(self._display_strategies.keys())
     
     def get_available_icon_families(self):
         return list(self._icon_families.keys())
