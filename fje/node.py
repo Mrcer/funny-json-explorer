@@ -13,6 +13,7 @@ from typing import List, Callable, Union
 import json
 import os
 from .exception import FJEException
+from typing import Generator
 
 id = 0
 
@@ -47,6 +48,12 @@ class JSONNode(ABC):
     def get_level(self) -> int:
         return self._level
     
+    """
+    按深度优先遍历节点"""
+    @abstractmethod
+    def __iter__(self) -> Generator['JSONNode', None, None]:
+        pass
+    
 class JSONComposite(JSONNode):
 
     def __init__(self, name: str, level: int):
@@ -67,8 +74,10 @@ class JSONComposite(JSONNode):
     def get_children(self) -> List[JSONNode]:
         return self._children
 
-    def __iter__(self):
-        return iter(self._children)
+    def __iter__(self) -> Generator[JSONNode, None, None]:
+        yield self
+        for child in self._children:
+            yield from iter(child)
     
 class JSONLeaf(JSONNode):
 
@@ -85,6 +94,8 @@ class JSONLeaf(JSONNode):
     def get_value(self) -> Union[str, None]:
         return self._value
     
+    def __iter__(self) -> Generator[JSONNode, None, None]:
+        yield self
 
 """
 从文件中读取JSON数据并解析为JSONNode对象"""
