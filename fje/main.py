@@ -1,5 +1,5 @@
 import argparse
-from .style import JSONNodeDrawer
+from .display import JSONNodeDrawer
 from .node import JSONNodeFactory
 from .exception import FJEException
 
