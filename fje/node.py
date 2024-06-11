@@ -15,25 +15,14 @@ import os
 from .exception import FJEException
 from typing import Generator
 
-id = 0
-
 class JSONNode(ABC):
 
     def __init__(self, name: str, level: int):
-        global id 
         self._name = name
         self._level = level
-        self._id = id
-        id += 1
 
     @abstractmethod
     def is_leaf(self) -> bool:
-        pass
-
-    """
-    按深度优先遍历节点"""
-    @abstractmethod
-    def traverse(self, fn: Callable[['JSONNode'], None]):
         pass
 
     def is_root(self) -> bool:
@@ -41,9 +30,6 @@ class JSONNode(ABC):
 
     def get_name(self) -> str:
         return self._name
-    
-    def get_id(self) -> int:
-        return self._id
     
     def get_level(self) -> int:
         return self._level
@@ -62,11 +48,6 @@ class JSONComposite(JSONNode):
 
     def is_leaf(self) -> bool:
         return False
-
-    def traverse(self, fn: Callable[['JSONNode'], None]):
-        fn(self)
-        for child in self._children:
-            child.traverse(fn)
 
     def add_child(self, child: JSONNode):
         self._children.append(child)
@@ -87,9 +68,6 @@ class JSONLeaf(JSONNode):
 
     def is_leaf(self) -> bool:
         return True
-
-    def traverse(self, fn: Callable[['JSONNode'], None]):
-        fn(self)
 
     def get_value(self) -> Union[str, None]:
         return self._value
