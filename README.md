@@ -62,7 +62,7 @@ options:
 
 项目通过 setuptools 进行打包，源码位于 fje 目录下。
 
-如果需要添加样式，只需实现 `style.style` 的抽象产品类和的抽象工厂类，然后在 `style.__init__.py` 中注册即可。
+如果需要添加样式，只需实现 `display.DisplayStrategy` 策略接口，然后在 `display.__init__.py` 中注册即可。
 
 详细请参考 docs 目录的设计文档。
 
